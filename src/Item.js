@@ -1,18 +1,40 @@
-import react from "react";
+// import react from "react";
 
-export default function Item(props) {
+export default function Item({
+  itemText,
+  itemId,
+  toggleChecked,
+  itemChecked,
+  deleteItem,
+}) {
   return (
-    <article class="item">
-      <div class="item-textfield">{props.itemText}</div>
-      <div class="button-wrapper">
-        <button class="edit item-button">
-          <i class="far fa-edit"></i>
+    <article className="item">
+      <div
+        className={
+          itemChecked ? "item-textfield checked-item" : "item-textfield"
+        }
+      >
+        {itemText}
+      </div>
+      <div className="button-wrapper">
+        <button className="edit item-button">
+          <i className="far fa-edit"></i>
         </button>
-        <button class="check item-button">
-          <i class="far fa-check-square"></i>
+        <button
+          className="check item-button"
+          onClick={() => {
+            toggleChecked(itemId);
+          }}
+        >
+          <i className="far fa-check-square"></i>
         </button>
-        <button class="delete item-button">
-          <i class="far fa-trash-alt"></i>
+        <button
+          className="delete item-button"
+          onClick={() => {
+            deleteItem(itemId);
+          }}
+        >
+          <i className="far fa-trash-alt"></i>
         </button>
       </div>
     </article>

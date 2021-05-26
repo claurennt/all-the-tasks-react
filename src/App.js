@@ -1,5 +1,5 @@
-import logo from "./logo.svg";
-import { useState } from "react";
+// import logo from "./logo.svg";
+import React, { useState } from "react";
 // import "./App.css";
 import Item from "./Item";
 import { nanoid } from "nanoid";
@@ -20,33 +20,68 @@ function App() {
 
   const addTask = (e) => {
     e.preventDefault();
-    console.log(e.currentTarget);
+    const newItem = {
+      itemId: nanoid(),
+      itemText: e.currentTarget.newItem.value,
+      itemChecked: false,
+    };
+    addItem([...items, newItem]);
+  };
+
+  const toggleChecked = (itemId) => {
+    const editedItems = items.map((item) => {
+      if (item.itemId === itemId) {
+        item.itemChecked = !item.itemChecked;
+      }
+      return item;
+    });
+
+    addItem(editedItems);
+  };
+
+  const deleteItem = (itemId) => {
+    const filteredItems = items.filter((item) => itemId != item.itemId);
+    addItem(filteredItems);
   };
 
   return (
-    <main class="list-wrapper">
-      <section class="list">
-        <h1>Remember me :)</h1>
+    <main className="list-wrapper">
+      <section className="list">
+        <h1>Remember me :</h1>
 
-        <div class="popup">
-          <span class="popuptext" id="myPopup">
+        <div className="popup">
+          <span className="popuptext" id="myPopup">
             Missing item!
           </span>
         </div>
-        <form class="submitForm" onSubmit={addTask}>
-          <div class="input-wrapper">
-            <input type="text" placeholder="Add Item..." class="input-item" />
-            <button id="input-button" class="input-button" type="submit">
+        <form className="submitForm" onSubmit={addTask}>
+          <div className="input-wrapper">
+            <input
+              type="text"
+              placeholder="Add Item..."
+              className="input-item"
+              name="newItem"
+            />
+            <button id="input-button" className="input-button" type="submit">
               +
             </button>
           </div>
         </form>
-        <div class="item-wrapper">
+        <div className="item-wrapper">
           {items.map((item) => {
-            return <Item key={item.itemId} itemText={item.itemText} />;
+            return (
+              <Item
+                key={item.itemId}
+                itemText={item.itemText}
+                itemId={item.itemId}
+                toggleChecked={toggleChecked}
+                deleteItem={deleteItem}
+                itemChecked={item.itemChecked}
+              />
+            );
           })}
         </div>
-        <div class="reset-local-storage">Reset list</div>
+        <div className="reset-local-storage">Reset list</div>
       </section>
     </main>
   );
