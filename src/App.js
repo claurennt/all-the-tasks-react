@@ -3,6 +3,8 @@ import React, { useState } from "react";
 // import "./App.css";
 import Item from "./Item";
 import { nanoid } from "nanoid";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [items, addItem] = useState([
@@ -10,11 +12,13 @@ function App() {
       itemId: nanoid(),
       itemText: "Drink water",
       itemChecked: false,
+      editing: false,
     },
     {
       itemId: nanoid(),
       itemText: "Drink wine",
       itemChecked: false,
+      editing: false,
     },
   ]);
 
@@ -24,24 +28,43 @@ function App() {
       itemId: nanoid(),
       itemText: e.currentTarget.newItem.value,
       itemChecked: false,
+      editing: false,
     };
     addItem([...items, newItem]);
   };
 
   const toggleChecked = (itemId) => {
-    const editedItems = items.map((item) => {
+    const toggledItems = items.map((item) => {
       if (item.itemId === itemId) {
         item.itemChecked = !item.itemChecked;
       }
       return item;
     });
 
-    addItem(editedItems);
+    addItem(toggledItems);
   };
 
   const deleteItem = (itemId) => {
-    const filteredItems = items.filter((item) => itemId != item.itemId);
+    const filteredItems = items.filter((item) => itemId !== item.itemId);
     addItem(filteredItems);
+  };
+
+  const editItem = (itemId) => {
+    if (items.filter((i) => i.editing).length) {
+      return toast.error("You are already editing a task!", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+    const targetItem = items.find((i) => i.itemId === itemId);
+    targetItem.editing = true;
+    addItem([...items.filter((i) => i.itemId !== itemId), targetItem]);
+  };
+
+  const finishEditItem = (event, itemId, text) => {
+    const targetItem = items.find((i) => i.itemId === itemId);
+    targetItem.editing = false;
+    targetItem.itemText = event.target.innerText;
+    addItem([...items.filter((i) => i.itemId !== itemId), targetItem]);
   };
 
   return (
@@ -77,12 +100,16 @@ function App() {
                 toggleChecked={toggleChecked}
                 deleteItem={deleteItem}
                 itemChecked={item.itemChecked}
+                editItem={editItem}
+                editing={item.editing}
+                onFinishEditing={finishEditItem}
               />
             );
           })}
         </div>
         <div className="reset-local-storage">Reset list</div>
       </section>
+      <ToastContainer />
     </main>
   );
 }

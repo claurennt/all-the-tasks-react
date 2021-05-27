@@ -1,11 +1,12 @@
-// import react from "react";
-
 export default function Item({
   itemText,
   itemId,
   toggleChecked,
+  editItem,
   itemChecked,
   deleteItem,
+  editing,
+  onFinishEditing,
 }) {
   return (
     <article className="item">
@@ -13,11 +14,18 @@ export default function Item({
         className={
           itemChecked ? "item-textfield checked-item" : "item-textfield"
         }
+        contentEditable={editing ? "true" : "false"}
+        suppressContentEditableWarning={true}
       >
         {itemText}
       </div>
       <div className="button-wrapper">
-        <button className="edit item-button">
+        <button
+          className="edit item-button"
+          onClick={() => {
+            editItem(itemId);
+          }}
+        >
           <i className="far fa-edit"></i>
         </button>
         <button
