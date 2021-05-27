@@ -16,6 +16,7 @@ export default function Item({
         }
         contentEditable={editing ? "true" : "false"}
         suppressContentEditableWarning={true}
+        onBlur={(event) => onFinishEditing(event, itemId)}
       >
         {itemText}
       </div>
@@ -23,7 +24,7 @@ export default function Item({
         <button
           className="edit item-button"
           onClick={() => {
-            editItem(itemId);
+            editItem(itemId, itemText);
           }}
         >
           <i className="far fa-edit"></i>

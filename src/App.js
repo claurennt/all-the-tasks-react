@@ -60,7 +60,7 @@ function App() {
     addItem([...items.filter((i) => i.itemId !== itemId), targetItem]);
   };
 
-  const finishEditItem = (event, itemId, text) => {
+  const finishEditItem = (event, itemId) => {
     const targetItem = items.find((i) => i.itemId === itemId);
     targetItem.editing = false;
     targetItem.itemText = event.target.innerText;
