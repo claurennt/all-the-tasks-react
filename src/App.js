@@ -12,12 +12,14 @@ function App() {
       itemText: "Drink water",
       itemChecked: false,
       editing: false,
+      created_at: Date.now(),
     },
     {
       itemId: nanoid(),
       itemText: "Drink wine",
       itemChecked: false,
       editing: false,
+      created_at: Date.now(),
     },
   ]);
 
@@ -29,6 +31,7 @@ function App() {
       itemText: e.currentTarget.newItem.value,
       itemChecked: false,
       editing: false,
+      created_at: Date.now(),
     };
     addItem([...items, newItem]);
     e.currentTarget.newItem.value = "";
@@ -79,10 +82,17 @@ function App() {
     addItem([...items.filter((i) => i.itemId !== itemId), targetItem]);
   };
 
+  // function to sort the order of the items in the list
+  const compare = (a, b) => {
+    if (a.created_at > b.created_at) return -1;
+    if (b.created_at > a.created_at) return 1;
+    return 0;
+  };
+
   return (
     <main className="list-wrapper">
       <section className="list">
-        <h1>Remember me :</h1>
+        <h1>Remember me...</h1>
 
         <div className="popup">
           <span className="popuptext" id="myPopup">
@@ -103,7 +113,7 @@ function App() {
           </div>
         </form>
         <div className="item-wrapper">
-          {items.map((item) => {
+          {items.sort(compare).map((item) => {
             return (
               <Item
                 key={item.itemId}
@@ -119,7 +129,6 @@ function App() {
             );
           })}
         </div>
-        <div className="reset-local-storage">Reset list</div>
       </section>
       <ToastContainer />
     </main>
