@@ -1,0 +1,91 @@
+.App {
+  width: 50vw;
+  padding-bottom: 10rem;
+}
+
+h1 {
+  font-size: 4rem;
+  text-align: center;
+  font-family: "DM Mono", monospace;
+  padding: 1.3rem 0;
+}
+
+.input-wrapper {
+  padding: 1rem 0;
+}
+
+.input-task {
+  color: #ff0075;
+  width: 40vw;
+  height: 3rem;
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+  border-color: transparent;
+  border-bottom: 2px solid white;
+  background-color: transparent;
+}
+
+.input-task:focus-visible {
+  outline: none;
+}
+::placeholder {
+  color: silver;
+}
+
+.input-button {
+  color: white;
+  background-color: transparent;
+  font-size: 2rem;
+  font-weight: normal;
+  border: 0px;
+  text-align: left;
+}
+
+i {
+  color: white;
+  font-size: 23px;
+  cursor: pointer;
+  margin: 10px;
+  font-weight: 100;
+}
+.task {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-mode {
+  opacity: 1;
+  border: 1.5px white solid;
+}
+.task-textfield {
+  width: 40vw;
+  padding: 1rem;
+  margin: 0.7rem 0 1.5rem;
+  background-color: #ff0075;
+  font-size: 1.5rem;
+}
+
+.button-wrapper {
+  flex: 1;
+  flex-wrap: nowrap;
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-button {
+  border: 0;
+  border-radius: 5px;
+  background-color: transparent;
+  padding: 0.5rem 0;
+}
+
+.checked-task {
+  background-color: darkgray;
+  color: lightslategray;
+  text-decoration: line-through;
+}
+
+footer {
+  text-align: center;
+  font-weight: bold;
+}
