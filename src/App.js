@@ -1,88 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import Item from "./Item";
-import { nanoid } from "nanoid";
+import Task from "./components/Task";
+import Form from "./components/Form";
+import defineInitialState from "./utils/defineInitialState";
+
+import "./App.css";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
-  const [items, addItem] = useState([
-    {
-      itemId: nanoid(),
-      itemText: "Drink water",
-      itemChecked: false,
-      editing: false,
-      created_at: Date.now(),
-    },
-    {
-      itemId: nanoid(),
-      itemText: "Drink wine",
-      itemChecked: false,
-      editing: false,
-      created_at: Date.now(),
-    },
-  ]);
+const App = () => {
+  const initialState = defineInitialState("tasks");
+
+  const [tasks, setTasks] = useState(initialState);
+
+  useEffect(() => {
+    //save tasks to local torage on window close
+    const saveTasksToLocalStorage = () =>
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    window.addEventListener("beforeunload", saveTasksToLocalStorage);
+    return () => {
+      window.removeEventListener("beforeunload", saveTasksToLocalStorage);
+    };
+  });
 
   // function to add tasks
-  const addTask = (e) => {
+  const addNewTask = (e) => {
     e.preventDefault();
-    const newItem = {
-      itemId: nanoid(),
-      itemText: e.currentTarget.newItem.value,
-      itemChecked: false,
+
+    const taskText = e.target.newTask.value;
+
+    const newtask = {
+      taskId: crypto.randomUUID(),
+      taskText,
+      isChecked: false,
       editing: false,
-      created_at: Date.now(),
+      created_at: Date.now() + 1,
     };
-    addItem([...items, newItem]);
-    e.currentTarget.newItem.value = "";
+
+    setTasks([newtask, ...tasks]);
+
+    e.currentTarget.newTask.value = "";
   };
 
-  //function to toggle itemChecked property of clicked item based on id
-  const toggleChecked = (itemId) => {
-    const toggledItems = items.map((item) => {
-      if (item.itemId === itemId) {
-        item.itemChecked = !item.itemChecked;
-      }
-      return item;
-    });
-
-    addItem(toggledItems);
+  //function to toggle taskChecked property of clicked task based on id
+  const toggleChecked = (taskId) => {
+    const toggledTask = tasks.find((task) => task.taskId === taskId);
+    toggledTask.isChecked = !toggledTask.isChecked;
+    toggledTask.ciao = !toggledTask.ciao;
+    setTasks([...tasks]);
   };
 
-  // function to delete clicked item
-  const deleteItem = (itemId) => {
-    // updates state with all filtered items but the one we are clicking on(identified by id)
-    const filteredItems = items.filter((item) => itemId !== item.itemId);
-    addItem(filteredItems);
+  // function to delete clicked task
+  const deleteTask = (taskId) => {
+    // updates state with all filtered tasks but the one we are clicking on(identified by id)
+    const filteredtasks = tasks.filter((task) => taskId !== task.taskId);
+    setTasks(filteredtasks);
   };
 
-  // function to edit text
-  const editItem = (itemId) => {
-    /*shows toast if we click on more than one item
-     (identified by the length of the array that filters the items by their editing property)
-    */
-    if (items.filter((i) => i.editing).length) {
+  const editTask = (taskId) => {
+    /*shows toast if we click to edit more than one task at a time*/
+    if (tasks.filter((task) => task.editing).length)
       return toast.error("You are already editing a task!", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-    }
-    // find the item we want to edit when we click on the edit button by the id and make it's editing prop to true
-    const targetItem = items.find((i) => i.itemId === itemId);
-    targetItem.editing = true;
-    addItem([...items.filter((i) => i.itemId !== itemId), targetItem]);
+
+    // find the task we want to edit when we click on the edit button by the id and make it's editing prop to true
+    const clickedTask = tasks.find((task) => task.taskId === taskId);
+    clickedTask.editing = true;
+    setTasks([...tasks]);
   };
 
-  /*when we finish the editItem(onBlur in item.js), we set the editing property 
-  back to false(this makes the contentEditable prop in the child = to false), 
-  then we subsitute the itemText property of that item with event.target.innerText and reupdate the state*/
-  const finishEditItem = (event, itemId) => {
-    const targetItem = items.find((i) => i.itemId === itemId);
-    targetItem.editing = false;
-    targetItem.itemText = event.target.innerText;
-    addItem([...items.filter((i) => i.itemId !== itemId), targetItem]);
+  const finisheditTask = (event, taskId) => {
+    const clickedTask = tasks.find((task) => task.taskId === taskId);
+    clickedTask.editing = false;
+    clickedTask.taskText = event.target.innerText;
+    setTasks([...tasks]);
   };
 
-  // function to sort the order of the items in the list
+  // function to sort the order of the tasks in the list
   const compare = (a, b) => {
     if (a.created_at > b.created_at) return -1;
     if (b.created_at > a.created_at) return 1;
@@ -90,49 +87,32 @@ function App() {
   };
 
   return (
-    <main className="list-wrapper">
-      <section className="list">
-        <h1>Remember me...</h1>
+    <>
+      <main className="App">
+        <section className="list">
+          <h1>All the tasks, aka React Todo List</h1>
 
-        <div className="popup">
-          <span className="popuptext" id="myPopup">
-            Missing item!
-          </span>
-        </div>
-        <form className="submitForm" onSubmit={addTask}>
-          <div className="input-wrapper">
-            <input
-              type="text"
-              placeholder="Add Item..."
-              className="input-item"
-              name="newItem"
-            />
-            <button id="input-button" className="input-button" type="submit">
-              +
-            </button>
-          </div>
-        </form>
-        <div className="item-wrapper">
-          {items.sort(compare).map((item) => {
-            return (
-              <Item
-                key={item.itemId}
-                itemText={item.itemText}
-                itemId={item.itemId}
+          <Form addNewTask={addNewTask} />
+
+          <div className="task-wrapper">
+            {tasks.sort(compare).map((task) => (
+              <Task
+                key={task.taskId}
+                {...task}
                 toggleChecked={toggleChecked}
-                deleteItem={deleteItem}
-                itemChecked={item.itemChecked}
-                editItem={editItem}
-                editing={item.editing}
-                onFinishEditing={finishEditItem}
+                deleteTask={deleteTask}
+                editTask={editTask}
+                onFinishEditing={finisheditTask}
               />
-            );
-          })}
-        </div>
-      </section>
-      <ToastContainer />
-    </main>
+            ))}
+          </div>
+        </section>
+        <ToastContainer />
+      </main>
+
+      <footer>Made with love by claurennt</footer>
+    </>
   );
-}
+};
 
 export default App;
