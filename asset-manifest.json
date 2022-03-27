@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/claurennt/all-the-tasks-react/static/css/main.ba3a2483.css",
-    "main.js": "/claurennt/all-the-tasks-react/static/js/main.07f1595b.js",
-    "static/media/bootstrap-icons.woff?": "/claurennt/all-the-tasks-react/static/media/bootstrap-icons.c1d7432ee75fa194e499.woff",
-    "static/media/bootstrap-icons.woff2?": "/claurennt/all-the-tasks-react/static/media/bootstrap-icons.a13b815539b49de48d23.woff2",
-    "index.html": "/claurennt/all-the-tasks-react/index.html",
-    "main.ba3a2483.css.map": "/claurennt/all-the-tasks-react/static/css/main.ba3a2483.css.map",
-    "main.07f1595b.js.map": "/claurennt/all-the-tasks-react/static/js/main.07f1595b.js.map"
+    "main.css": "/all-the-tasks-react/static/css/main.780279ee.css",
+    "main.js": "/all-the-tasks-react/static/js/main.07f1595b.js",
+    "static/media/bootstrap-icons.woff?": "/all-the-tasks-react/static/media/bootstrap-icons.c1d7432ee75fa194e499.woff",
+    "static/media/bootstrap-icons.woff2?": "/all-the-tasks-react/static/media/bootstrap-icons.a13b815539b49de48d23.woff2",
+    "index.html": "/all-the-tasks-react/index.html",
+    "main.780279ee.css.map": "/all-the-tasks-react/static/css/main.780279ee.css.map",
+    "main.07f1595b.js.map": "/all-the-tasks-react/static/js/main.07f1595b.js.map"
   },
   "entrypoints": [
-    "static/css/main.ba3a2483.css",
+    "static/css/main.780279ee.css",
     "static/js/main.07f1595b.js"
   ]
 }
