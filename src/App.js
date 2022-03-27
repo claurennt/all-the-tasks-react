@@ -47,8 +47,9 @@ const App = () => {
   //function to toggle taskChecked property of clicked task based on id
   const toggleChecked = (taskId) => {
     const toggledTask = tasks.find((task) => task.taskId === taskId);
+
     toggledTask.isChecked = !toggledTask.isChecked;
-    toggledTask.ciao = !toggledTask.ciao;
+
     setTasks([...tasks]);
   };
 
@@ -56,6 +57,7 @@ const App = () => {
   const deleteTask = (taskId) => {
     // updates state with all filtered tasks but the one we are clicking on(identified by id)
     const filteredtasks = tasks.filter((task) => taskId !== task.taskId);
+
     setTasks(filteredtasks);
   };
 
@@ -68,22 +70,27 @@ const App = () => {
 
     // find the task we want to edit when we click on the edit button by the id and make it's editing prop to true
     const clickedTask = tasks.find((task) => task.taskId === taskId);
+
     clickedTask.editing = true;
+
     setTasks([...tasks]);
   };
 
-  const finisheditTask = (event, taskId) => {
+  const finishEditTask = (event, taskId) => {
     const clickedTask = tasks.find((task) => task.taskId === taskId);
+
     clickedTask.editing = false;
+
     clickedTask.taskText = event.target.innerText;
+
     setTasks([...tasks]);
   };
 
   // function to sort the order of the tasks in the list
   const compare = (a, b) => {
-    if (a.created_at > b.created_at) return -1;
-    if (b.created_at > a.created_at) return 1;
-    return 0;
+    // if (a.created_at > b.created_at) return -1;
+    // if (b.created_at > a.created_at) return 1;
+    // return 0;
   };
 
   return (
@@ -102,7 +109,7 @@ const App = () => {
                 toggleChecked={toggleChecked}
                 deleteTask={deleteTask}
                 editTask={editTask}
-                onFinishEditing={finisheditTask}
+                finishEditTask={finishEditTask}
               />
             ))}
           </div>

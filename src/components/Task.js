@@ -6,7 +6,7 @@ const Task = ({
   editTask,
   deleteTask,
   editing,
-  onFinishEditing,
+  finishEditTask,
 }) => (
   <article className="task">
     <div
@@ -15,7 +15,7 @@ const Task = ({
       } ${editing && "edit-mode"}`}
       contentEditable={editing}
       suppressContentEditableWarning={true}
-      onBlur={(event) => onFinishEditing(event, taskId)}
+      onBlur={(event) => finishEditTask(event, taskId)}
     >
       {taskText}
     </div>
