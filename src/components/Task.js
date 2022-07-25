@@ -26,7 +26,7 @@ const Task = ({
           editTask(taskId, taskText);
         }}
       >
-        <i class="bi bi-eraser"></i>
+        <i className="bi bi-eraser"></i>
       </button>
       <button
         className="check task-button"
@@ -34,7 +34,7 @@ const Task = ({
           toggleChecked(taskId);
         }}
       >
-        <i class="bi bi-check-lg"></i>
+        <i className="bi bi-check-lg"></i>
       </button>
       <button
         className="delete task-button"
@@ -42,7 +42,7 @@ const Task = ({
           deleteTask(taskId);
         }}
       >
-        <i class="bi bi-dash"></i>
+        <i className="bi bi-dash"></i>
       </button>
     </div>
   </article>

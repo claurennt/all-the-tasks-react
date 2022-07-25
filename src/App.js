@@ -10,20 +10,20 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
-  const initialState = defineInitialState("tasks");
+  const initialState = defineInitialState("reactTasks");
 
   const [tasks, setTasks] = useState(initialState);
 
-  useEffect(() => {
-    //save tasks to local torage on window close
-    const saveTasksToLocalStorage = () =>
-      localStorage.setItem("tasks", JSON.stringify(tasks));
+  //save tasks to local storage on window close
+  const saveTasksToLocalStorage = () =>
+    localStorage.setItem("reactTasks", JSON.stringify(tasks));
 
+  useEffect(() => {
     window.addEventListener("beforeunload", saveTasksToLocalStorage);
     return () => {
       window.removeEventListener("beforeunload", saveTasksToLocalStorage);
     };
-  });
+  }, [tasks]);
 
   // function to add tasks
   const addNewTask = (e) => {
@@ -86,23 +86,15 @@ const App = () => {
     setTasks([...tasks]);
   };
 
-  // function to sort the order of the tasks in the list
-  const compare = (a, b) => {
-    // if (a.created_at > b.created_at) return -1;
-    // if (b.created_at > a.created_at) return 1;
-    // return 0;
-  };
-
   return (
     <>
       <main className="App">
+        <h1>All the tasks, aka React Todo List</h1>
+
+        <Form addNewTask={addNewTask} />
         <section className="list">
-          <h1>All the tasks, aka React Todo List</h1>
-
-          <Form addNewTask={addNewTask} />
-
           <div className="task-wrapper">
-            {tasks.sort(compare).map((task) => (
+            {tasks.map((task) => (
               <Task
                 key={task.taskId}
                 {...task}

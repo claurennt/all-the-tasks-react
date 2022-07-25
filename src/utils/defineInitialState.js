@@ -1,5 +1,6 @@
 const defineInitialState = (key) => {
-  const storedTasks = localStorage.getItem(key);
+  const storedTasks = JSON.parse(localStorage.getItem(key));
+
   const dummyTasks = [
     {
       taskId: crypto.randomUUID(),
@@ -16,8 +17,8 @@ const defineInitialState = (key) => {
       created_at: Date.now() + 1,
     },
   ];
-
-  return storedTasks ? JSON.parse(storedTasks) : dummyTasks;
+  // if no items are saved inside the local storage we return the hardcoded dummy tasks and display them on load
+  return storedTasks.length ? storedTasks : dummyTasks;
 };
 
 export default defineInitialState;
