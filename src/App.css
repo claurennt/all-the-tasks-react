@@ -4,7 +4,7 @@
 }
 
 h1 {
-  font-size: 1.7rem;
+  font-size: 4rem;
   text-align: center;
   font-family: "DM Mono", monospace;
   padding: 0.3rem 0;
@@ -20,7 +20,7 @@ h1 {
   width: 40vw;
   height: 3rem;
   margin-right: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   border-color: transparent;
   border-bottom: 2px solid white;
   background-color: transparent;
@@ -60,7 +60,7 @@ i {
 }
 .task-textfield {
   width: 40vw;
-  padding: 0.5rem;
+  padding: 1rem;
   margin: 0.7rem 0;
   background-color: #ff0075;
   font-size: 1rem;
