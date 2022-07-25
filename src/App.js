@@ -14,11 +14,10 @@ const App = () => {
 
   const [tasks, setTasks] = useState(initialState);
 
-  //save tasks to local storage on window close
-  const saveTasksToLocalStorage = () =>
-    localStorage.setItem("reactTasks", JSON.stringify(tasks));
-
   useEffect(() => {
+    //save tasks to local storage on window close
+    const saveTasksToLocalStorage = () =>
+      localStorage.setItem("reactTasks", JSON.stringify(tasks));
     window.addEventListener("beforeunload", saveTasksToLocalStorage);
     return () => {
       window.removeEventListener("beforeunload", saveTasksToLocalStorage);
