@@ -18,7 +18,7 @@ const defineInitialState = (key) => {
     },
   ];
   // if no items are saved inside the local storage we return the hardcoded dummy tasks and display them on load
-  return storedTasks.length ? storedTasks : dummyTasks;
+  return storedTasks?.length ? storedTasks : dummyTasks;
 };
 
 export default defineInitialState;
